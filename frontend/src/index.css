@@ -20,79 +20,80 @@
 }
 
 @layer utilities {
-  .gradient-conic-morph {
-    --angle: 0deg;
-    --c1: #332E3C;
-    --c2: #A29587;
-    --c3: #f1effa;
-    --c4: #d8d4f2;
-    --c5: #846C5B;
+  .mesh-bg {
+    /* full screen as before */
+    position: absolute;
+    top: 50%;
+    left: 50%;
 
-    background: conic-gradient(
-      from var(--angle) at 50% 50%,
-      var(--c1) 0%,
-      var(--c2) 20%,
-      var(--c3) 40%,
-      var(--c4) 60%,
-      var(--c5) 80%,
-      var(--c1) 100%
-    );
+    /* make it √2 times bigger than the viewport so 
+       a 45° “diamond” still fills the screen */
+    width: 150vmax;
+    height: 150vmax;
+
+    /* 2) Center that giant square on the screen */
+    transform-origin: center center;
+    transform: translate(-50%, -50%) rotate(0deg);
+    /* fallback background color */
+    background-color: #cf99ff;
+    background-image:
+      radial-gradient(
+        at var(--g1-x, 88%) var(--g1-y, 78%),
+        hsla(24,18%,43%,1) 0px,
+        transparent var(--g1-s, 50%)
+      ),
+      radial-gradient(
+        at var(--g2-x, 20%) var(--g2-y, 15%),
+        hsla(247,53%,89%,1) 0px,
+        transparent var(--g2-s, 50%)
+      ),
+      radial-gradient(
+        at var(--g3-x, 43%) var(--g3-y, 97%),
+        hsla(33,12%,52%,1) 0px,
+        transparent var(--g3-s, 50%)
+      ),
+      radial-gradient(
+        at var(--g4-x, 26%) var(--g4-y, 74%),
+        hsla(247,53%,52%,1) 0px,
+        transparent var(--g4-s, 50%)
+      ),
+      radial-gradient(
+        at var(--g5-x, 58%) var(--g5-y, 53%),
+        hsla(24,18%,43%,1) 0px,
+        transparent var(--g5-s, 50%)
+      );
     background-size: cover;
+    pointer-events: none;
 
-    width: 100%;
-    height: 100%;
+    /* transition each custom property for smooth morphs */
+    transition:
+      --g1-x 8s ease-in-out,
+      --g1-y 8s ease-in-out,
+      --g1-s 8s ease-in-out,
+      --g2-x 8s ease-in-out,
+      --g2-y 8s ease-in-out,
+      --g2-s 8s ease-in-out,
+      --g3-x 8s ease-in-out,
+      --g3-y 8s ease-in-out,
+      --g3-s 8s ease-in-out,
+      --g4-x 8s ease-in-out,
+      --g4-y 8s ease-in-out,
+      --g4-s 8s ease-in-out,
+      --g5-x 8s ease-in-out,
+      --g5-y 8s ease-in-out,
+      --g5-s 8s ease-in-out;
 
-    animation:
-      rotate       45s linear       infinite,
-      color-morph  24s ease-in-out  infinite;
+    will-change: transform;
+    animation: mesh-rotate 120s linear infinite;
+    animation: hueSpin 30s linear infinite;
   }
-
-  @keyframes rotate {
-    to { --angle: 360deg }
+  @keyframes hueSpin {
+  to { filter: hue-rotate(30deg); };
   }
-
-  @keyframes color-morph {
-    0% {
-      --c1: #332E3C;
-      --c2: #A29587;
-      --c3: #f1effa; 
-      --c4: #d8d4f2; 
-      --c5: #846C5B; 
+  @keyframes mesh-rotate {
+    to {
+      /* keep the translate baked-in, just spin the rotation */
+      transform: translate(-50%, -50%) rotate(360deg);
     }
-    20% {
-      --c1: #A29587;
-      --c2: #f1effa;
-      --c3: #d8d4f2;
-      --c4: #846C5B;
-      --c5: #332E3C;
-    }
-    40% {
-      --c1: #f1effa;
-      --c2: #d8d4f2;
-      --c3: #846C5B;
-      --c4: #332E3C;
-      --c5: #A29587;
-    }
-    60% {
-      --c1: #d8d4f2;
-      --c2: #846C5B;
-      --c3: #332E3C;
-      --c4: #A29587;
-      --c5: #f1effa;
-    }
-    80% {
-      --c1: #846C5B;
-      --c2: #332E3C;
-      --c3: #A29587;
-      --c4: #f1effa;
-      --c5: #d8d4f2;
-    }
-    100% {
-      --c1: #332E3C;
-      --c2: #A29587;
-      --c3: #f1effa;
-      --c4: #d8d4f2;
-      --c5: #846C5B;
-    }
-  }
+}
 }
