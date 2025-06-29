@@ -2,23 +2,97 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Optional: custom font setup */
 @layer base {
-  @font-face {
-    font-family: 'Satoshi';
-    src: url('/fonts/Satoshi-Variable.ttf') format('truetype-variations');
-    font-weight: 300 900;
-    font-display: swap;
+  @property --angle {
+    syntax: '<angle>';
+    initial-value: 0deg;
+    inherits: false;
   }
 
-  @font-face {
-    font-family: 'Inter';
-    src: url('/fonts/Inter-VariableFont_opsz,wght.ttf') format('truetype-variations');
-    font-weight: 100 900;
-    font-display: swap;
+  @property --c1 { syntax: '<color>'; initial-value: #332E3C; inherits: false }
+  @property --c2 { syntax: '<color>'; initial-value: #A29587; inherits: false }
+  @property --c3 { syntax: '<color>'; initial-value: #f1effa; inherits: false }
+  @property --c4 { syntax: '<color>'; initial-value: #d8d4f2; inherits: false }
+  @property --c5 { syntax: '<color>'; initial-value: #846C5B; inherits: false }
+
+  html, body, #root { height: 100% }
+  body { @apply bg-transparent }
+}
+
+@layer utilities {
+  .gradient-conic-morph {
+    --angle: 0deg;
+    --c1: #332E3C;
+    --c2: #A29587;
+    --c3: #f1effa;
+    --c4: #d8d4f2;
+    --c5: #846C5B;
+
+    background: conic-gradient(
+      from var(--angle) at 50% 50%,
+      var(--c1) 0%,
+      var(--c2) 20%,
+      var(--c3) 40%,
+      var(--c4) 60%,
+      var(--c5) 80%,
+      var(--c1) 100%
+    );
+    background-size: cover;
+
+    width: 100%;
+    height: 100%;
+
+    animation:
+      rotate       45s linear       infinite,
+      color-morph  24s ease-in-out  infinite;
   }
 
-  body {
-    @apply bg-bone text-charcoal font-sans;
+  @keyframes rotate {
+    to { --angle: 360deg }
+  }
+
+  @keyframes color-morph {
+    0% {
+      --c1: #332E3C;
+      --c2: #A29587;
+      --c3: #f1effa; 
+      --c4: #d8d4f2; 
+      --c5: #846C5B; 
+    }
+    20% {
+      --c1: #A29587;
+      --c2: #f1effa;
+      --c3: #d8d4f2;
+      --c4: #846C5B;
+      --c5: #332E3C;
+    }
+    40% {
+      --c1: #f1effa;
+      --c2: #d8d4f2;
+      --c3: #846C5B;
+      --c4: #332E3C;
+      --c5: #A29587;
+    }
+    60% {
+      --c1: #d8d4f2;
+      --c2: #846C5B;
+      --c3: #332E3C;
+      --c4: #A29587;
+      --c5: #f1effa;
+    }
+    80% {
+      --c1: #846C5B;
+      --c2: #332E3C;
+      --c3: #A29587;
+      --c4: #f1effa;
+      --c5: #d8d4f2;
+    }
+    100% {
+      --c1: #332E3C;
+      --c2: #A29587;
+      --c3: #f1effa;
+      --c4: #d8d4f2;
+      --c5: #846C5B;
+    }
   }
 }
