@@ -114,6 +114,11 @@
     background-color: rgba(75, 75, 75, 0.15); 
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px); 
+    border-radius: 10px;
+    &:hover {
+      background-color: rgba(75, 75, 75, 0.25); 
+    }
+
   }
     .search-bar-layout {
     /*manually defining responsive values because tailwind is not working*/
@@ -123,11 +128,41 @@
     margin-right: auto;
 
     @media (min-width: 768px) {
-      width: 600px;
+      max-width: 600px;
+      width: 100%;
+      padding: 1.5rem 1.5rem;
+      margin-left:auto;
+      margin-right:auto;
     }
+
+   
+
 }
 .font-heading {
   font-family: 'Satoshi', sans-serif;
   font-weight: 900;
 }
 }
+.frosted-button {
+  border-radius: 9999px;
+  font-weight: 500;
+  color: #cbd5e1;
+  transition: all 0.2s ease-in-out;
+}
+
+.frosted-button:hover {
+  transform: scale(1.03);
+}
+  .result-card-layout {
+    padding: 1.5rem 1.5rem; 
+    margin-bottom: 2rem;
+    margin-left: auto; 
+    margin-right: auto; 
+  @media (min-width: 768px) {
+    max-width: 480px;
+    width: 100%;
+    padding: 1.5rem 1.5rem;      
+    margin-left: auto;       
+    margin-right: auto;
+    }
+  }

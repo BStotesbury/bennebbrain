@@ -15,6 +15,7 @@ import json
 import re
 import numpy as np
 import nltk
+from pydantic import BaseModel
 nltk.download('punkt')
 nltk.download("punkt_tab")
 
@@ -112,9 +113,12 @@ async def ingest_url(request: Request):
         return {"status": "skipped", "error": str(e)}
 
 ###for frontend search queries against notes & articles tables###
-@app.get("/search")
-def search_all(q: str):
-    query_embedding = embed_text(q)
+class SearchRequest(BaseModel):
+    query: str
+
+@app.post("/search")
+def search_all(payload: SearchRequest):
+    query_embedding = embed_text(payload.query)
     try:
         results = supabase.rpc("match_vectors", {"query_embedding": query_embedding}).execute()
         print("Supabase RPC raw response:", results)
