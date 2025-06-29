@@ -1,5 +1,5 @@
 import React from 'react';
-import '../index.css';  // wherever you keep the CSS above
+import '../index.css';  
 
 export default function MeshBackground() {
   return (

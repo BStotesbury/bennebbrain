@@ -21,20 +21,11 @@
 
 @layer utilities {
   .mesh-bg {
-    /* full screen as before */
     position: absolute;
-    top: 50%;
-    left: 50%;
-
-    /* make it √2 times bigger than the viewport so 
-       a 45° “diamond” still fills the screen */
-    width: 150vmax;
-    height: 150vmax;
-
-    /* 2) Center that giant square on the screen */
-    transform-origin: center center;
-    transform: translate(-50%, -50%) rotate(0deg);
-    /* fallback background color */
+    inset: 0;
+    /*transform-origin: center center;
+    animation: mesh-rotate 12s linear infinite;
+    will-change: transform;*/
     background-color: #cf99ff;
     background-image:
       radial-gradient(
@@ -65,7 +56,6 @@
     background-size: cover;
     pointer-events: none;
 
-    /* transition each custom property for smooth morphs */
     transition:
       --g1-x 8s ease-in-out,
       --g1-y 8s ease-in-out,
@@ -83,17 +73,11 @@
       --g5-y 8s ease-in-out,
       --g5-s 8s ease-in-out;
 
-    will-change: transform;
-    animation: mesh-rotate 120s linear infinite;
-    animation: hueSpin 30s linear infinite;
   }
   @keyframes hueSpin {
   to { filter: hue-rotate(30deg); };
   }
   @keyframes mesh-rotate {
-    to {
-      /* keep the translate baked-in, just spin the rotation */
-      transform: translate(-50%, -50%) rotate(360deg);
-    }
-}
+    to { transform: rotate(360deg); }
+  }
 }
