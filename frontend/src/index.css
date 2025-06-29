@@ -16,17 +16,55 @@
   @property --c5 { syntax: '<color>'; initial-value: #846C5B; inherits: false }
 
   html, body, #root { height: 100% }
-  body { @apply bg-transparent }
+
+  body {
+    @apply bg-transparent;
+    margin: 0; 
+    padding: 0; 
+    color: #f1effa;
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+  }
+  
+  @font-face {
+    font-family: 'Inter';
+    src: url('/fonts/Inter-VariableFont_opsz,wght.ttf') format('truetype-variations');
+    font-weight: 100 900; 
+    font-style: normal;
+  }
+
+
+  @font-face {
+    font-family: 'Satoshi';
+    src: url('/fonts/Satoshi-Variable.ttf') format('truetype-variations');
+    font-weight: 300 900; 
+    font-style: normal;
+  }
+
+
+  @font-face {
+    font-family: 'Satoshi';
+    src: url('/fonts/Satoshi-Bold.ttf') format('truetype');
+    font-weight: 700; 
+    font-style: normal;
+  }
 }
 
 @layer utilities {
   .mesh-bg {
-    position: absolute;
-    inset: 0;
-    /*transform-origin: center center;
-    animation: mesh-rotate 12s linear infinite;
-    will-change: transform;*/
+    position: absolute; 
+    inset: 0;         
+    z-index: 0;        
+    overflow: hidden;   
+    pointer-events: none; 
     background-color: #cf99ff;
+  }
+
+  .mesh-bg::before {
+    content: ""; 
+    position: absolute;
+    inset: 0; 
+
     background-image:
       radial-gradient(
         at var(--g1-x, 88%) var(--g1-y, 78%),
@@ -54,8 +92,7 @@
         transparent var(--g5-s, 50%)
       );
     background-size: cover;
-    pointer-events: none;
-
+    /* antiquated but keeping for future */
     transition:
       --g1-x 8s ease-in-out,
       --g1-y 8s ease-in-out,
@@ -72,12 +109,25 @@
       --g5-x 8s ease-in-out,
       --g5-y 8s ease-in-out,
       --g5-s 8s ease-in-out;
+  }
+    .frosted-glass {
+    background-color: rgba(75, 75, 75, 0.15); 
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px); 
+  }
+    .search-bar-layout {
+    /*manually defining responsive values because tailwind is not working*/
+    width: calc(100% - 3rem); 
+    padding: 1rem;
+    margin-left: auto;
+    margin-right: auto;
 
-  }
-  @keyframes hueSpin {
-  to { filter: hue-rotate(30deg); };
-  }
-  @keyframes mesh-rotate {
-    to { transform: rotate(360deg); }
-  }
+    @media (min-width: 768px) {
+      width: 600px;
+    }
+}
+.font-heading {
+  font-family: 'Satoshi', sans-serif;
+  font-weight: 900;
+}
 }
