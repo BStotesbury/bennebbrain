@@ -32,16 +32,12 @@
     font-weight: 100 900; 
     font-style: normal;
   }
-
-
   @font-face {
     font-family: 'Satoshi';
     src: url('/fonts/Satoshi-Variable.ttf') format('truetype-variations');
     font-weight: 300 900; 
     font-style: normal;
   }
-
-
   @font-face {
     font-family: 'Satoshi';
     src: url('/fonts/Satoshi-Bold.ttf') format('truetype');
@@ -118,7 +114,6 @@
     &:hover {
       background-color: rgba(75, 75, 75, 0.25); 
     }
-
   }
     .search-bar-layout {
     /*manually defining responsive values because tailwind is not working*/
@@ -134,35 +129,65 @@
       margin-left:auto;
       margin-right:auto;
     }
-
-   
-
 }
 .font-heading {
   font-family: 'Satoshi', sans-serif;
   font-weight: 900;
 }
 }
+
+.result-card-layout {
+  padding: 1.5rem 1.5rem; 
+  box-sizing: border-box;
+  margin-bottom: 1rem;
+  margin-left: auto; 
+  margin-right: auto; 
+  font-size: 0.875rem; 
+  line-height: 1.1rem;
+  /*scrollingstuff*/
+  max-height: 60vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+@media (min-width: 768px) {
+  max-width: 480px;
+  width: 100%;
+  padding: 1.5rem 1.5rem;      
+  margin-left: auto;       
+  margin-right: auto;
+  }
+}
+.result-card-layout::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+}
+.result-card-layout * {
+  max-width: 100%;
+  word-wrap: break-word;
+}
 .frosted-button {
   border-radius: 9999px;
-  font-weight: 500;
+  font-weight: 300;
   color: #cbd5e1;
   transition: all 0.2s ease-in-out;
 }
-
 .frosted-button:hover {
   transform: scale(1.03);
 }
-  .result-card-layout {
-    padding: 1.5rem 1.5rem; 
-    margin-bottom: 2rem;
-    margin-left: auto; 
-    margin-right: auto; 
-  @media (min-width: 768px) {
-    max-width: 480px;
-    width: 100%;
-    padding: 1.5rem 1.5rem;      
-    margin-left: auto;       
-    margin-right: auto;
-    }
-  }
+.score-pill {
+  font-size: 0.75rem;
+  font-weight: 300;
+  padding: 0.05rem 0.05rem;
+  margin-left: 0.5rem;
+  border-radius: 0.5rem;
+  min-width: 2.5rem;
+  text-align: center;
+  color: #f1f1f1; 
+  backdrop-filter: blur(4px);
+  transition: background-color 0.3s ease;
+}
+.score-green {background-color: rgba(22, 163, 74, 0.25); color: #d4f4e0;}
+.score-lime {background-color: rgba(101, 163, 13, 0.22); color: #eaffcd;}
+.score-amber {background-color: rgba(217, 119, 6, 0.22); color: #fff1cc;}
+.score-red {background-color: rgba(220, 38, 38, 0.2); color: #ffe3e3;}

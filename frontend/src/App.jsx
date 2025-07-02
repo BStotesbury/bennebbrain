@@ -50,15 +50,16 @@ export default function App() {
 
         {}
         <section className="result-card-layout">
-          {results.length > 0 &&
-            results.map((result, index) => (
-              <ResultCard
-                key={index}
-                source={result.source}
-                title={result.title}
-                url={result.url}
-              />
-            ))}
+          {results.map((item, index) => (
+  <ResultCard
+    key={index}
+    source={item.source}
+    title={item.text_or_title}
+    url={item.source_link}
+    similarity={item.similarity}
+  />
+))}
+
         </section>
       </main>
     </div>
