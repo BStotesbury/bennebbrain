@@ -34,7 +34,7 @@ export default function App() {
 
         {}
         <div className="mt-8 frosted-glass flex items-center rounded-full shadow-lg search-bar-layout">
-          <input
+          <input style={{ fontSize: '16px' }}
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
