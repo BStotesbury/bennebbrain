@@ -10,7 +10,7 @@ export default function App() {
   async function handleSearch() {
   if (!searchQuery.trim()) return;
   try {
-    const response = await fetch('http://localhost:8000/search', {
+    const response = await fetch('https://bennebbrain-production.up.railway.app/search', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ query: searchQuery }),
