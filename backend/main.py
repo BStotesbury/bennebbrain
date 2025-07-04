@@ -384,3 +384,62 @@ print("Supabase Response:", response)
 #        response = store_note(text)
 #        print("Note uploaded:", response)
 
+### RAG Layer ###
+class RAGRequest(BaseModel):
+    query: str
+
+@app.post("/rag")
+async def rag_handler(request: RAGRequest):
+    print("RAG endpoint received a request.")
+    print(f"Query: '{request.query}'")
+    """
+    Handles a RAG request by retrieving relevant context and generating a response.
+    """
+    # 1. Embed the user's query
+    query_embedding = embedder.embed_query(request.query)
+
+    # 2. Retrieve relevant article chunks from Supabase
+    try:
+        match_response = supabase.rpc(
+            "match_article_chunks",
+            {
+                "query_embedding": query_embedding,
+                "match_threshold": 0.3,
+                "match_count": 5,
+            },
+        ).execute()
+
+        retrieved_chunks = match_response.data
+        context_text = "\n\n---\n\n".join([chunk['chunk_text'] for chunk in retrieved_chunks])
+
+    except Exception as e:
+        print(f"Error retrieving from Supabase: {e}")
+        return {"error": "Failed to retrieve relevant documents."}
+
+    # 3. Formulate the prompt for the LLM
+    prompt_template = """
+    You are a helpful AI assistant. Based on the following context, please answer the user's question.
+    If the context does not contain the answer, say so.
+
+    Context:
+    {context}
+
+    Question:
+    {question}
+    """
+    prompt = PromptTemplate(
+        input_variables=["context", "question"],
+        template=prompt_template,
+    )
+
+    # 4. Set up the LangChain chain with GPT-4 Turbo
+    rag_llm = ChatOpenAI(model="gpt-4-turbo", temperature=0.2, openai_api_key=openai_api_key)
+    rag_chain = prompt | rag_llm | StrOutputParser()
+
+    # 5. Invoke the chain to get the answer
+    try:
+        answer = rag_chain.invoke({"context": context_text, "question": request.query})
+        return {"answer": answer, "retrieved_chunks": retrieved_chunks}
+    except Exception as e:
+        print(f"Error generating response from LLM: {e}")
+        return {"error": "Failed to generate a response."}

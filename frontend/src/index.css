@@ -53,6 +53,7 @@
     z-index: 0;        
     overflow: hidden;   
     pointer-events: none; 
+
     background-color: #cf99ff;
   }
 
@@ -135,7 +136,7 @@
   font-weight: 900;
 }
 }
-
+/*********************** SEARCH RESULTS *********************/
 .result-card-layout {
   padding: 1.5rem 1.5rem; 
   box-sizing: border-box;
@@ -191,3 +192,64 @@
 .score-lime {background-color: rgba(101, 163, 13, 0.22); color: #eaffcd;}
 .score-amber {background-color: rgba(217, 119, 6, 0.22); color: #fff1cc;}
 .score-red {background-color: rgba(220, 38, 38, 0.2); color: #ffe3e3;}
+
+/************************* SWITCH STYLING *******************************/
+/* Container for the whole switch element */
+.toggle-switch {
+  display: flex;
+  align-items: right;
+  cursor: pointer;
+  margin-bottom: 0.5rem;
+  margin-right: 0.5rem;
+}
+.toggle-switch-label {
+  margin-left: 12px;
+  font-family: sans-serif;
+  color: rgba(255, 255, 255, 0.8);
+}
+.toggle-switch-input {
+  height: 0;
+  width: 0;
+  opacity: 0;
+}
+.toggle-switch-track {
+  position: relative;
+  width: 56px;
+  height: 32px; 
+  background-color: rgba(75, 85, 99, 0.5);
+  border-radius: 9999px;
+  transition: background-color 0.2s ease-in-out;
+}
+.toggle-switch-nub {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 24px; 
+  height: 24px; 
+  background-color: white;
+  border-radius: 9999px;
+  transition: transform 0.2s ease-in-out;
+}
+.toggle-switch-input:checked + .toggle-switch-track {
+  background-color: rgba(158, 229, 192, 0.5); 
+}
+.toggle-switch-input:checked + .toggle-switch-track .toggle-switch-nub {
+  transform: translateX(24px);
+}
+.markdown-content p {
+  margin-bottom: 1rem;
+}
+.markdown-content p:last-child {
+  margin-bottom: 0;
+}
+.markdown-content strong {
+  font-weight: bold;
+}
+.markdown-content ul, .markdown-content ol {
+  list-style-position: inside;
+  margin-left: 1rem;
+  margin-bottom: 1rem;
+}
+.markdown-content li {
+  margin-bottom: 0.25rem;
+}

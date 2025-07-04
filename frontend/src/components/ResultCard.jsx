@@ -8,11 +8,10 @@ function getScoreClass(similarity) {
   return 'score-red';
 }
 
-export default function ResultCard({ source, title, url, similarity }) {
+export default function ResultCard({ source, title, url, similarity, content }) {
   return (
     <div className="max-w-md mx-auto px-4 frosted-glass result-card-layout rounded-2xl shadow-lg text-left">
       
-      {}
       <div className="flex items-center justify-start gap-2 mb-2">
         <div className="text-xs sm:text-sm font-semibold opacity-80">
           {source.toUpperCase()}
@@ -25,17 +24,24 @@ export default function ResultCard({ source, title, url, similarity }) {
       </div>
 
       {}
-      <h3 className="font-heading text-base sm:text-lg font-semibold mb-4 leading-snug">
+      <h3 className="font-heading text-base sm:text-lg font-semibold mb-2 leading-snug">
         {title}
       </h3>
 
       {}
+      {}
+      {content && (
+        <p className="text-sm opacity-90 leading-relaxed mb-4">
+          {content}
+        </p>
+      )}
+
       {url && (
         <a
           href={url}
           target="_blank"
           rel="noopener noreferrer"
-          className="frosted-button inline-block mt-4 text-sm"
+          className="frosted-button inline-block mt-auto text-sm" 
         >
           View Source
         </a>
