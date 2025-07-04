@@ -15,6 +15,7 @@ import json
 import re
 import numpy as np
 import nltk
+import trafilatura
 from pydantic import BaseModel
 nltk.download('punkt')
 nltk.download("punkt_tab")
@@ -146,13 +147,19 @@ def search_all(payload: SearchRequest):
 
 #newspaper URL processing function
 def process_url(url):
-    article = Article(url)
-    article.download()
-    article.parse()
-    return article.text, {
-        "title": article.title,
-        "authors": article.authors,
-        "publish_date": str(article.publish_date or datetime.now()),
+    downloaded = trafilatura.fetch_url(url)
+    if not downloaded:
+        raise ValueError("Failed to fetch URL")
+
+    result = trafilatura.extract(downloaded, with_metadata=True, output_format="json")
+    if not result:
+        raise ValueError("Extraction failed")
+
+    data = json.loads(result)
+    return data["text"], {
+        "title": data.get("title"),
+        "authors": [data.get("author")] if data.get("author") else [],
+        "publish_date": data.get("date") or str(datetime.now()),
         "url": url
     }
 
@@ -190,21 +197,25 @@ def clean_article_text(raw_text):
 
 ### article processing function ###
 def process_article(url):
-    article = Article(url)
-    article.download()
-    article.parse()
-    article.nlp()  # Run NLP to extract metadata like keywords, summary, etc.
+    downloaded = trafilatura.fetch_url(url)
+    if not downloaded:
+        raise ValueError("Failed to fetch URL")
 
-    content_raw = article.text
+    result = trafilatura.extract(downloaded, with_metadata=True, output_format="json")
+    if not result:
+        raise ValueError("Extraction failed")
+
+    data = json.loads(result)
+    content_raw = data["text"]
     content_cleaned = clean_article_text(content_raw)
 
-    # Extract metadata
     metadata = {
-        "title": article.title,
-        "authors": article.authors,
-        "publish_date": str(article.publish_date or datetime.now()),
+        "title": data.get("title"),
+        "authors": [data.get("author")] if data.get("author") else [],
+        "publish_date": data.get("date") or str(datetime.now()),
         "url": url
     }
+
     return content_raw, content_cleaned, metadata
 
 ### using LLM chain to extract keywords from article content ###

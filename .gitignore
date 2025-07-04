@@ -4,3 +4,5 @@ __pycache__/
 build/
 frontend/node_modules/
 node_modules/
+.venv/
+
