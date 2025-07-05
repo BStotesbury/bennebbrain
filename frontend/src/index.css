@@ -61,7 +61,10 @@
     content: ""; 
     position: absolute;
     inset: 0; 
-
+    animation: 
+    drift-1 15s ease-in-out infinite alternate,
+    drift-2 12s ease-in-out infinite alternate-reverse,
+    drift-3 18s ease-in-out infinite alternate;
     background-image:
       radial-gradient(
         at var(--g1-x, 88%) var(--g1-y, 78%),
@@ -253,3 +256,48 @@
 .markdown-content li {
   margin-bottom: 0.25rem;
 }
+/* Define the animations */
+@keyframes drift-1 {
+  from { --g1-x: 88%; --g1-y: 78%; }
+  to   { --g1-x: 20%; --g1-y: 40%; }
+}
+
+@keyframes drift-2 {
+  from { --g2-x: 20%; --g2-y: 15%; }
+  to   { --g2-x: 80%; --g2-y: 90%; }
+}
+
+@keyframes drift-3 {
+  from { --g3-x: 43%; --g3-y: 97%; }
+  to   { --g3-x: 70%; --g3-y: 10%; }
+}
+ @property --g1-x {
+    syntax: '<percentage>';
+    initial-value: 88%;
+    inherits: false;
+  }
+  @property --g1-y {
+    syntax: '<percentage>';
+    initial-value: 78%;
+    inherits: false;
+  }
+  @property --g2-x {
+    syntax: '<percentage>';
+    initial-value: 20%;
+    inherits: false;
+  }
+  @property --g2-y {
+    syntax: '<percentage>';
+    initial-value: 15%;
+    inherits: false;
+  }
+  @property --g3-x {
+    syntax: '<percentage>';
+    initial-value: 43%;
+    inherits: false;
+  }
+  @property --g3-y {
+    syntax: '<percentage>';
+    initial-value: 97%;
+    inherits: false;
+  }
