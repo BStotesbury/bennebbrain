@@ -19,6 +19,7 @@
 
   body {
     @apply bg-transparent;
+    background-color: #332E3C;
     margin: 0; 
     padding: 0; 
     color: #f1effa;
